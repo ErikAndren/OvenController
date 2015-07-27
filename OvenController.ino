@@ -121,13 +121,11 @@ void loop() {
            lcd.clear();
            lcd.print("Done!");
            delay(5000);
-           
                       
          } else if (menuPos == maxSteps + 1) {
             s = LOAD_PROFILE_STATE;
             drawProfile(curProf);
             menuPos = curProf;
-            
          }
          break;
          
@@ -294,7 +292,7 @@ void drawProfileState(int prof, int curStep) {
      itoa(profiles[prof][curStep].targetTemp, buf, 10);
      lcd.print(buf);
      lcd.print("C ");
-     itoa(profiles[prof][curStep].targetTemp, buf, 10);
+     itoa(profiles[prof][curStep].duration, buf, 10);
      lcd.print(buf);
      lcd.print("s");
   }
