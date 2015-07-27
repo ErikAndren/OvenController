@@ -291,10 +291,10 @@ void drawProfileState(int prof, int curStep) {
      lcd.print(" ");
      itoa(profiles[prof][curStep].targetTemp, buf, 10);
      lcd.print(buf);
-     lcd.print("C ");
+     lcd.print(" C ");
      itoa(profiles[prof][curStep].duration, buf, 10);
      lcd.print(buf);
-     lcd.print("s");
+     lcd.print(" s");
   }
   
   lcd.setCursor(1, 1);
@@ -473,7 +473,7 @@ void executeProfile(int prof) {
       lcd.print(":");
       lcd.print(buf);
       
-      delay(200);       
+      delay(1000);
     }   
   }
 }
