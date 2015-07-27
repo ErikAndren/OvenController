@@ -317,78 +317,86 @@ void drawProfileState(int prof, int curStep) {
 }
 
 void createProfile(int prof) {
-  char buf[4];
+  //Loop here until user has released button
+  while (digitalRead(rightBtnPin) == LOW) {}
+
   
   //Loop here until we've set temp and duration
   for (int step = 0; step < maxSteps; step++) {
-     unsigned int c = 0;
+    unsigned int c = 0;
 
-    lcd.clear();
-    lcd.print("C for prof ");
-    lcd.print(itocTable[prof]);
-    lcd.print(", s 0");
-    lcd.setCursor(0, 1);
-    lcd.print("T=?");
+    drawC(c, step);
      
-     //Temp loop
-     while(true) {
-        if (digitalRead(rightBtnPin) == LOW) {
-          profiles[prof][step].targetTemp = c;
-          
-          delay(500);
-          break;
-        } else if (digitalRead(leftBtnPin) == LOW) {
-            c++;
-            if (c > 300) {
-              c = 0;
-            }
-            lcd.clear();
-            lcd.print("C for prof ");
-            lcd.print(itocTable[prof]);
-            lcd.print(" ");
-            lcd.print("st ");
-            lcd.print(itocTable[step]);
-            
-            lcd.setCursor(0, 1);
-            lcd.print("T=");
-            itoa(c, buf, 10);
-            lcd.print(buf);
-            lcd.print(" C");
-            
-            delay(100);
+    //Temp loop
+    while(true) {
+      if (digitalRead(rightBtnPin) == LOW) {
+        profiles[prof][step].targetTemp = c;
+        
+        break;
+      } else if (digitalRead(leftBtnPin) == LOW) {
+        c++;
+        if (c > 300) {
+          c = 0;
         }
-     }
-     
-     //Duration loop
-     c = 0;
-     while(true) {
-        if (digitalRead(rightBtnPin) == LOW) {
-          profiles[prof][step].duration = c;
-          
-          delay(500);
-          break;
-        } else if (digitalRead(leftBtnPin) == LOW) {
-            c++;
-            if (c > 300) {
-              c = 0;
-            }
-            lcd.clear();
-            lcd.print("T for prof ");
-            lcd.print(itocTable[prof]);
-            lcd.print(" ");
-            lcd.print("st ");
-            lcd.print(itocTable[step]);
-            
-            lcd.setCursor(0, 1);
-            lcd.print("Duration=");
-            itoa(c, buf, 10);
-            lcd.print(buf);
-            lcd.print(" m");
-            
-            delay(100);
+        drawC(c, step);
+        delay(100);
+      }
+   }
+   
+   //Loop here until user has released button
+   while (digitalRead(rightBtnPin) == LOW) {}
+   
+   //Duration loop
+   c = 0;
+   drawT(c, step);
+   
+   while(true) {
+      if (digitalRead(rightBtnPin) == LOW) {
+        profiles[prof][step].duration = c;
+        
+        break;
+      } else if (digitalRead(leftBtnPin) == LOW) {
+        c++;
+        if (c > 300) {
+          c = 0;
         }
-     }
+       
+        drawT(c, step);
+        delay(100);
+      }
+   }
+   
+   //Loop here until user has released button
+   while (digitalRead(rightBtnPin) == LOW) {}
   }
+}
+
+void drawC(unsigned int c, int s) {
+  char buf[4];
+
+  lcd.clear();
+  lcd.print("C step ");
+  lcd.print(itocTable[s]);
+            
+  lcd.setCursor(0, 1);
+  lcd.print("T=");
+  itoa(c, buf, 10);
+  lcd.print(buf);
+  lcd.print(" C");
+}
+
+void drawT(unsigned int t, int s) {
+   char buf[4];
+
+   lcd.clear();
+   lcd.print("T step ");
+   lcd.print(itocTable[s]);
+    
+   lcd.setCursor(0, 1);
+   lcd.print("Duration=");
+   itoa(t, buf, 10);
+   lcd.print(buf);
+   lcd.print(" m");
 }
 
 void executeProfile(int prof) {
