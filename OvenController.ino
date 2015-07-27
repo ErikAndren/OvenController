@@ -163,7 +163,7 @@ void loop() {
            menuPos = 0;
          } else {
            curProf = menuPos;
-           defineProfile(curProf);
+           createProfile(curProf);
            drawProfile(curProf);
          }
          break;
@@ -316,7 +316,7 @@ void drawProfileState(int prof, int curStep) {
   }
 }
 
-void defineProfile(int prof) {
+void createProfile(int prof) {
   char buf[4];
   
   //Loop here until we've set temp and duration
