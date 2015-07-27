@@ -307,10 +307,10 @@ void drawProfileState(int prof, int curStep) {
      lcd.print(" ");
      itoa(profiles[prof][nextStep].targetTemp, buf, 10);
      lcd.print(buf);
-     lcd.print("C ");
+     lcd.print(" C ");
      itoa(profiles[prof][nextStep].targetTemp, buf, 10);
      lcd.print(buf);
-     lcd.print("s");     
+     lcd.print(" s");     
   }
 }
 
